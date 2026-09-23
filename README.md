@@ -29,11 +29,10 @@ Requires Node 18 or newer. Set `APEX_MCP_URL` to point the bridge somewhere else
 
 ## Price
 
-Free, with no account: `page_extract` without `full` returns the title, description, headings and the first 400 characters;
-`site_extract` without `full` returns the exact crawl plan; single exit checks are free up to a daily allowance.
-Paid calls use [x402](https://x402.org) and are paid by the caller's own wallet, per call: `page_extract` full text $0.01,
-`site_extract` $1.00 for up to 25 rendered pages. USDC on Arc, Base or Solana, or XNT on X1. The price is stated before you pay,
-and a call that fails (a bot wall, an empty render) fails instead of charging.
+$1 per call for every tool that sells data or work: `page_extract`, `site_extract` (up to 25 pages), token exit checks
+and the X1 and Arc data tools. There is no free allowance on those. Payment is [x402](https://x402.org), made by the
+caller's own wallet per call: USDC on Arc, Base or Solana, or XNT on X1. The price is stated before you pay, and a call
+that fails (a bot wall, an empty render) fails instead of charging. The faucet tools stay free.
 
 ## What this bridge does
 

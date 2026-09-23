@@ -18,7 +18,7 @@ Command-launched clients (Claude Desktop, Cursor, Cline, and others):
 ```
 
 Clients that speak Streamable HTTP can use `https://apexfaucet.xyz/api/mcp` directly, without this bridge.
-No API key is needed. Paid tools are paid per call with x402 by the caller's own wallet, and the price is stated
+No API key is needed. Paid tools cost $1 per call, paid with x402 by the caller's own wallet; the price is stated
 before anything is paid. See the README for the tools and prices.
 
 ## Run and test
