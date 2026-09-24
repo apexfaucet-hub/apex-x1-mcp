@@ -11,6 +11,19 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 78 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
+## Only the tools you need
+
+The full server lists 78 tools. Two focused endpoints list only their own domain, so your agent does not carry 78 tool
+descriptions in its context:
+
+| endpoint | tools |
+|---|---|
+| `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser) |
+| `https://apexfaucet.xyz/api/mcp/arc` | the eight Arc tools: faucet status and claim, exit checks, pools, bridges, liquidity |
+| `https://apexfaucet.xyz/api/mcp` | everything |
+
+With this bridge, pick one with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`.
+
 ## Install
 
 Claude Desktop, Cursor, Cline or any client that runs a command:
