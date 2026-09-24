@@ -6,9 +6,9 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
 - **`arc_exit_check`** answers, before you buy a token on Circle's Arc, whether you can sell it again and what the round trip costs: a real buy-then-sell simulated on the live chain, nothing spent, plus the pool's fee (some Arc pools take 49-93% of every trade).
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
-- About 80 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
+- About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-90 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+78 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Install
