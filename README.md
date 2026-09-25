@@ -8,18 +8,18 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-79 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+80 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 79 tools. Two focused endpoints list only their own domain, so your agent does not carry 79 tool
+The full server lists 80 tools. Two focused endpoints list only their own domain, so your agent does not carry 80 tool
 descriptions in its context:
 
 | endpoint | tools |
 |---|---|
 | `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser) |
-| `https://apexfaucet.xyz/api/mcp/arc` | the nine Arc tools: faucet status and claim, exit checks, the agent watchtower, pools, bridges, liquidity, assays |
+| `https://apexfaucet.xyz/api/mcp/arc` | the ten Arc tools: faucet status and claim, exit checks, the agent watchtower, the x402 explorer, pools, bridges, liquidity, assays |
 | `https://apexfaucet.xyz/api/mcp` | everything |
 
 With this bridge, pick one with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`.
