@@ -4,22 +4,24 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 
 - **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
 - **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
+- **`arc_passport_draft`** gives an agent an ERC-8004 identity on Arc for free: we host a correct registration file, your own wallet sends the one `register()` transaction, so the identity is yours from the first block. **`arc_passport_buy`** does it for an agent that pays with a signature alone ($0.99 over x402) and hands the identity to the paying wallet.
+- **`x402_inspect`** reads any x402 paywall for you (every network, asset, amount and how to pay each), and **`arc_catalogue_search`** prices a service against Circle's own Arc catalogue, cheapest first.
 - **`arc_exit_check`** answers, before you buy a token on Circle's Arc, whether you can sell it again and what the round trip costs: a real buy-then-sell simulated on the live chain, nothing spent, plus the pool's fee (some Arc pools take 49-93% of every trade).
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-80 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+111 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 80 tools. Two focused endpoints list only their own domain, so your agent does not carry 80 tool
+The full server lists 111 tools. Two focused endpoints list only their own domain, so your agent does not carry 111 tool
 descriptions in its context:
 
 | endpoint | tools |
 |---|---|
-| `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser) |
-| `https://apexfaucet.xyz/api/mcp/arc` | the ten Arc tools: faucet status and claim, exit checks, the agent watchtower, the x402 explorer, pools, bridges, liquidity, assays |
+| `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser), `web_read` |
+| `https://apexfaucet.xyz/api/mcp/arc` | the 38 Arc tools: faucet, agent passports, exit checks and verdicts, the agent watchtower, the x402 explorer and facilitators, Circle catalogue price search, the paywall inspector, wallet, contract, RPC and reputation checks, pools, bridges, gas, fee vaults, graveyard, impostors, deployers, liquidity, assays, guides |
 | `https://apexfaucet.xyz/api/mcp` | everything |
 
 With this bridge, pick one with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`.
