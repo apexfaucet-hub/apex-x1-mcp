@@ -42,8 +42,9 @@ Requires Node 18 or newer. Set `APEX_MCP_URL` to point the bridge somewhere else
 
 ## Price
 
-$1 per call for every tool that sells data or work: `page_extract`, `site_extract` (up to 25 pages), token exit checks
-and the X1 and Arc data tools. There is no free allowance on those. Payment is [x402](https://x402.org), made by the
+Every tool that sells data or work is paid per call, each a little under the closest competitor: `page_extract` $0.009,
+`site_extract` $0.14 (up to 25 pages), token exit checks $0.004, the X1 and Arc data tools from $0.003, bulk data $0.025
+(full list: https://apexfaucet.xyz/pricing/). There is no free allowance on those. Payment is [x402](https://x402.org), made by the
 caller's own wallet per call: USDC on Arc, Base or Solana, or XNT on X1. The price is stated before you pay, and a call
 that fails (a bot wall, an empty render) fails instead of charging. The faucet tools stay free.
 
