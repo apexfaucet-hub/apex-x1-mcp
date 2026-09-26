@@ -1,5 +1,7 @@
 # APEX MCP server
 
+[![test](https://github.com/apexfaucet-hub/apex-x1-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/apexfaucet-hub/apex-x1-mcp/actions/workflows/test.yml)
+
 A real browser for your agent, plus an honest "can I get out?" check for tokens on Arc and other chains.
 
 - **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
@@ -57,5 +59,14 @@ nothing, needs no key, and has no dependencies: read [`index.js`](index.js), it 
 
 Discovery: [`/.well-known/mcp/server-card.json`](https://apexfaucet.xyz/.well-known/mcp/server-card.json) ·
 [`llms.txt`](https://apexfaucet.xyz/llms.txt) · [x402 catalogue](https://apexfaucet.xyz/.well-known/x402)
+
+## Development
+
+```sh
+npm test
+```
+
+This runs `node --test`: the tests in [`test/`](test) start a local mock MCP server and run the bridge against it, so
+they need no network, no key and no install step. CI runs them on Node 18, 20 and 22.
 
 MIT licensed.
