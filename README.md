@@ -10,12 +10,12 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-111 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+110 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 111 tools. Two focused endpoints list only their own domain, so your agent does not carry 111 tool
+The full server lists 110 tools. Two focused endpoints list only their own domain, so your agent does not carry 111 tool
 descriptions in its context:
 
 | endpoint | tools |
