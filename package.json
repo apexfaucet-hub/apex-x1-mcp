@@ -6,6 +6,9 @@
     "apex-mcp": "index.js"
   },
   "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  },
   "engines": {
     "node": ">=18"
   },
