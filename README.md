@@ -15,7 +15,7 @@ tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as
 
 ## Only the tools you need
 
-The full server lists 110 tools. Two focused endpoints list only their own domain, so your agent does not carry 111 tool
+The full server lists 110 tools. Two focused endpoints list only their own domain, so your agent does not carry 110 tool
 descriptions in its context:
 
 | endpoint | tools |
