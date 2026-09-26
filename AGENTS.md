@@ -4,7 +4,7 @@ Instructions for AI coding agents working in this repository, or adding this MCP
 
 ## What this is
 
-A dependency-free stdio bridge (`index.js`, about 40 lines) to the hosted APEX MCP server at
+A dependency-free stdio bridge (`index.js`, under 50 lines) to the hosted APEX MCP server at
 `https://apexfaucet.xyz/api/mcp`. It reads JSON-RPC lines from stdin, POSTs each one to the hosted server over
 Streamable HTTP, keeps the `mcp-session-id` header, and writes the answers to stdout. The tools themselves live on
 the server, not here.

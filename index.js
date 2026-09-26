@@ -10,24 +10,27 @@ let buf = '';
 const out = (obj) => process.stdout.write(JSON.stringify(obj) + '\n');
 
 async function forward(msg) {
+  const id = msg && msg.method !== undefined ? msg.id : undefined; // only a request (method + id) gets an answer
+  const fail = (message) => out({ jsonrpc: '2.0', id, error: { code: -32000, message } });
   const headers = { 'content-type': 'application/json', accept: 'application/json, text/event-stream', 'user-agent': 'apex-mcp-bridge/1.0' };
   if (session) headers['mcp-session-id'] = session;
-  let res;
+  let res, text;
   try {
     res = await fetch(ENDPOINT, { method: 'POST', headers, body: JSON.stringify(msg), signal: AbortSignal.timeout(120000) });
+    const sid = res.headers.get('mcp-session-id'); if (sid) session = sid;
+    if (id === undefined) return;                         // a notification (or the client's own response) has no answer
+    text = await res.text();                              // a connection dropped mid-body rejects here
   } catch (e) {
-    if (msg.id !== undefined) out({ jsonrpc: '2.0', id: msg.id, error: { code: -32000, message: 'APEX MCP server unreachable: ' + e.message } });
+    if (id !== undefined) fail('APEX MCP server unreachable: ' + e.message);
     return;
   }
-  const sid = res.headers.get('mcp-session-id'); if (sid) session = sid;
-  if (msg.id === undefined) return;                       // a notification has no answer
-  const text = await res.text();
   if ((res.headers.get('content-type') || '').includes('text/event-stream')) {
     for (const line of text.split('\n')) if (line.startsWith('data:')) { const d = line.slice(5).trim(); if (d) process.stdout.write(d + '\n'); }
     return;
   }
-  try { out(JSON.parse(text)); }
-  catch (e) { out({ jsonrpc: '2.0', id: msg.id, error: { code: -32000, message: 'HTTP ' + res.status + ' from the APEX MCP server' } }); }
+  let reply; try { reply = JSON.parse(text); } catch (e) { /* not JSON: answered below */ }
+  if (reply && (res.ok || reply.id === id)) out(reply);  // a non-2xx body is passed on only if it answers this request
+  else fail('HTTP ' + res.status + ' from the APEX MCP server');
 }
 
 process.stdin.setEncoding('utf8');
