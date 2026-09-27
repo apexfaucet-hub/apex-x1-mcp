@@ -12,12 +12,12 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-124 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+126 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 124 tools. Two focused endpoints list only their own domain, so your agent does not carry 124 tool
+The full server lists 126 tools. Two focused endpoints list only their own domain, so your agent does not carry 126 tool
 descriptions in its context:
 
 | endpoint | tools |
