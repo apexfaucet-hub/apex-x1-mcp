@@ -8,14 +8,16 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`x402_inspect`** reads any x402 paywall for you (every network, asset, amount and how to pay each), and **`arc_catalogue_search`** prices a service against Circle's own Arc catalogue, cheapest first.
 - **`arc_exit_check`** answers, before you buy a token on Circle's Arc, whether you can sell it again and what the round trip costs: a real buy-then-sell simulated on the live chain, nothing spent, plus the pool's fee (some Arc pools take 49-93% of every trade).
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
+- **`base_exit_check`** does it on Base by execution: a buy and a full sell through the token's deepest Uniswap v2, v3 or v4 pool (hooks included) in one simulated block, returning the ETH that comes back and the revert reason if a leg fails.
+- **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-110 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+114 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 110 tools. Two focused endpoints list only their own domain, so your agent does not carry 110 tool
+The full server lists 114 tools. Two focused endpoints list only their own domain, so your agent does not carry 114 tool
 descriptions in its context:
 
 | endpoint | tools |
