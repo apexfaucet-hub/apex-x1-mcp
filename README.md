@@ -12,12 +12,12 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-114 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+124 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 114 tools. Two focused endpoints list only their own domain, so your agent does not carry 114 tool
+The full server lists 124 tools. Two focused endpoints list only their own domain, so your agent does not carry 124 tool
 descriptions in its context:
 
 | endpoint | tools |
@@ -70,3 +70,7 @@ This runs `node --test`: the tests in [`test/`](test) start a local mock MCP ser
 they need no network, no key and no install step. They pass on Node 18, 20 and 22.
 
 MIT licensed.
+
+## Agent Meal
+
+Agents that pay for APEX tools are served an on-chain meal NFT on Arc (one per tool family per 30-day season, gas on us). Five different dishes forge into a Chef's Special. Rules: https://apexfaucet.xyz/arc/meals/rules.json. The `agent_meal` tool shows the kitchen and any plate.
