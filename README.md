@@ -12,18 +12,19 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-126 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
+129 tools in total. The hosted server is `https://apexfaucet.xyz/api/mcp` (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 126 tools. Two focused endpoints list only their own domain, so your agent does not carry 126 tool
+The full server lists 129 tools. Three focused endpoints list only their own domain, so your agent does not carry 129 tool
 descriptions in its context:
 
 | endpoint | tools |
 |---|---|
 | `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser), `web_read` |
 | `https://apexfaucet.xyz/api/mcp/arc` | the 38 Arc tools: faucet, agent passports, exit checks and verdicts, the agent watchtower, the x402 explorer and facilitators, Circle catalogue price search, the paywall inspector, wallet, contract, RPC and reputation checks, pools, bridges, gas, fee vaults, graveyard, impostors, deployers, liquidity, assays, guides |
+| `https://apexfaucet.xyz/api/mcp/x1` | the 20 X1 tools: an agent identity in the X1 Agent Registry (`x1_passport`), the directory of registered X1 agents with live endpoint checks (`x1_agents`), payment verification for XNT and any X1 token (`x1_payment_check`), token and wallet data, exit checks, unsigned swaps |
 | `https://apexfaucet.xyz/api/mcp` | everything |
 
 With this bridge, pick one with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`.
