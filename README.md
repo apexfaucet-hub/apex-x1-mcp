@@ -28,7 +28,7 @@ descriptions in its context:
 | `https://apexfaucet.xyz/api/mcp/x1` | the 20 X1 tools: an agent identity in the X1 Agent Registry (`x1_passport`), the directory of registered X1 agents with live endpoint checks (`x1_agents`), payment verification for XNT and any X1 token (`x1_payment_check`), token and wallet data, exit checks, unsigned swaps |
 | `https://apexfaucet.xyz/api/mcp` | everything |
 
-With this bridge, pick one with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`.
+With this bridge, pick one by name as the last argument (`node index.js x1`, `arc` or `web`), or with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`. The Glama listing "APEX X1" runs the `x1` profile.
 
 ## Install
 

@@ -4,7 +4,10 @@
 // Clients that launch MCP servers as local commands (Claude Desktop, Cursor, Cline, ...) run this; it forwards every
 // JSON-RPC message to the hosted server over Streamable HTTP and writes the answers back. No dependencies, Node >= 18.
 // Nothing is stored and no key is involved: paid tools are paid per call with x402 by the caller's own wallet.
-const ENDPOINT = process.env.APEX_MCP_URL || 'https://apexfaucet.xyz/api/mcp';
+// One argument picks a focused profile of the same server: `node index.js x1` (20 X1 tools), `arc` (Arc tools), `web` (the browser
+// tools). No argument = every tool (https://apexfaucet.xyz/api/mcp). APEX_MCP_URL overrides both.
+const PROFILE = ['x1', 'arc', 'web'].includes(String(process.argv[2] || '').toLowerCase()) ? String(process.argv[2]).toLowerCase() : null;
+const ENDPOINT = process.env.APEX_MCP_URL || 'https://apexfaucet.xyz/api/mcp' + (PROFILE ? '/' + PROFILE : '');
 let session = null;
 let buf = '';
 const out = (obj) => process.stdout.write(JSON.stringify(obj) + '\n');
