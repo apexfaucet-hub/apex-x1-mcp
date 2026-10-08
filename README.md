@@ -4,7 +4,7 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 
 - **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
 - **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
-- **`arc_passport_draft`** gives an agent an ERC-8004 identity on Arc for free: we host a correct registration file, your own wallet sends the one `register()` transaction, so the identity is yours from the first block. **`arc_passport_buy`** does it for an agent that pays with a signature alone ($0.99 over x402) and hands the identity to the paying wallet.
+- **`arc_passport_buy`** gives an agent an ERC-8004 identity on Arc for $0.99, paid with a signature alone over x402: we write a correct registration file and the identity is handed to the paying wallet. **`arc_passport_status`** shows where it stands. (The free self-mint draft was retired on 1 Oct 2026.)
 - **`x402_inspect`** reads any x402 paywall for you (every network, asset, amount and how to pay each), and **`arc_catalogue_search`** prices a service against Circle's own Arc catalogue, cheapest first.
 - **`arc_exit_check`** answers, before you buy a token on Circle's Arc, whether you can sell it again and what the round trip costs: a real buy-then-sell simulated on the live chain, nothing spent, plus the pool's fee (some Arc pools take 49-93% of every trade).
 - **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
@@ -48,9 +48,11 @@ Requires Node 18 or newer. Set `APEX_MCP_URL` to point the bridge somewhere else
 ## Price
 
 Every tool that sells data or work is paid per call, each a little under the closest competitor: `page_extract` $0.009,
-`site_extract` $0.14 (up to 25 pages), token exit checks $0.004, the X1 and Arc data tools from $0.003, bulk data $0.025
+`site_extract` $0.14 (up to 25 pages), token exit checks $0.004, the X1 and Arc data tools from $0.001, bulk data $0.025
 (full list: https://apexfaucet.xyz/pricing/). There is no free allowance on those. Payment is [x402](https://x402.org), made by the
-caller's own wallet per call: USDC on Arc, Base or Solana, or XNT on X1. The price is stated before you pay, and a call
+caller's own wallet per call: USDC on Arc, Base or Solana, gas-free USDC from a Circle Gateway balance on Arc or Base, USD1 or
+U on BNB Chain, or XNT on X1. Without a crypto wallet, the same products can be called over plain HTTP
+with a $5 card pass (https://apexfaucet.xyz/pass/, sent in the `X-APEX-PASS` header) at the same prices. The price is stated before you pay, and a call
 that fails (a bot wall, an empty render) fails instead of charging. The faucet tools stay free.
 
 ## What this bridge does
