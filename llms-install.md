@@ -29,4 +29,4 @@ Set `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }` (3 web too
 
 ## Check that it works
 
-Ask for the tool list; the full server answers with 153 tools (7 Oct 2026). Paid tools first answer with x402 payment terms (USDC on Arc, Base or Solana); free tools (faucet status and claims by signature, health) answer directly.
+Ask for the tool list; the full server answers with 156 tools (7 Oct 2026). Paid tools first answer with x402 payment terms (USDC on Arc, Base or Solana); free tools (faucet status and claims by signature, health) answer directly.
