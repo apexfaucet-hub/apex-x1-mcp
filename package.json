@@ -1,6 +1,6 @@
 {
   "name": "apex-mcp",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "MCP server: render any web page (or 25 pages of a site) in a real browser to clean text, check whether an Arc token can be sold before you buy, and read the X1 chain. Stdio bridge to https://apexfaucet.xyz/api/mcp.",
   "bin": {
     "apex-mcp": "index.js"
