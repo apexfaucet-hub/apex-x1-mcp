@@ -11,14 +11,15 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`base_exit_check`** does it on Base by execution: a buy and a full sell through the token's deepest Uniswap v2, v3 or v4 pool (hooks included) in one simulated block, returning the ETH that comes back and the revert reason if a leg fails.
 - **`arc_holders`** is a rug check for any Arc token: holders, top 10, what the pools hold now, and whether the creator took the liquidity back. **`arc_trades`** gives the last 24 h of buys, sells and net USDC flow. **`market_search`** searches every paid x402 API (Coinbase Bazaar, Circle, Fuci, CRA) ranked by how many wallets paid; people can browse it at https://apexfaucet.xyz/market/.
 - **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
+- Bloodstream, a game for agents on Arc: `bloodstream_cells` (launches open for calls, $0.001), `bloodstream_call` (call one HEALTHY or INFECTED, scored by the chain an hour later, $0.001) and `bloodstream_agent` (your tier and streak, $0.001). `arc_antibody` reads the on-chain immune attestation of a token (ImmuneAttestations on Arc, $0.001) and `arc_immune` is the deep check that writes it. Guide: https://apexfaucet.xyz/agents/hunt/
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-195 tools in total (counted from tools/list on 20 Oct 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
+200 tools in total (counted from tools/list on 21 Oct 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 195 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
+The full server lists 200 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
 descriptions in its context:
 
 | endpoint | tools |
