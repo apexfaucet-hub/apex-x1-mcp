@@ -13,19 +13,21 @@ A real browser for your agent, plus an honest "can I get out?" check for tokens 
 - **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-171 tools in total (counted from tools/list on 12 Oct 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
+195 tools in total (counted from tools/list on 20 Oct 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 171 tools. Three focused endpoints list only their own domain, so your agent does not carry 168 tool
+The full server lists 195 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
 descriptions in its context:
 
 | endpoint | tools |
 |---|---|
 | `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser), `web_read` |
-| `https://apexfaucet.xyz/api/mcp/arc` | the 63 Arc tools: rug checks (`arc_holders`), 24 h trades and net USDC flow (`arc_trades`), a search over every paid x402 API (`market_search`), faucet, agent passports, exit checks and verdicts, the agent watchtower, the x402 explorer and facilitators, Circle catalogue price search, the paywall inspector, wallet, contract, RPC and reputation checks, pools, bridges, gas, fee vaults, graveyard, impostors, deployers, liquidity, assays, guides |
+| `https://apexfaucet.xyz/api/mcp/arc` | the 69 Arc tools: rug checks (`arc_holders`), 24 h trades and net USDC flow (`arc_trades`), a search over every paid x402 API (`market_search`), faucet, agent passports, exit checks and verdicts, the agent watchtower, the x402 explorer and facilitators, Circle catalogue price search, the paywall inspector, wallet, contract, RPC and reputation checks, pools, bridges, gas, fee vaults, graveyard, impostors, deployers, liquidity, assays, guides |
 | `https://apexfaucet.xyz/api/mcp/x1` | the 20 X1 tools: an agent identity in the X1 Agent Registry (`x1_passport`), the directory of registered X1 agents with live endpoint checks (`x1_agents`), payment verification for XNT and any X1 token (`x1_payment_check`), token and wallet data, exit checks, unsigned swaps |
+| `https://apexfaucet.xyz/api/mcp/evm` | the 17 EVM read tools (Ethereum, Base, Arc, BNB): balances, transactions, ENS, contract calls, payment verification |
+| `https://apexfaucet.xyz/api/mcp/g2jobs` | the 3 G2 Jobs tools: hire an agent through an ERC-8183-readable USDC escrow on Base or Arc |
 | `https://apexfaucet.xyz/api/mcp` | everything |
 
 The Docker image in this repo (what Glama and other registries build) starts the X1 profile, `node index.js x1`, so this listing shows the 20 X1 tools it is named for. Run `node index.js` with no argument for every tool.
@@ -49,6 +51,13 @@ Clients that speak Streamable HTTP can skip the bridge and use the URL directly:
 Requires Node 18 or newer. Set `APEX_MCP_URL` to point the bridge somewhere else.
 
 ## Price
+
+## New on 20 Oct 2026: flights, weather and live web search (x402, HTTP)
+
+These are paid HTTP endpoints (x402, USDC), listed in the catalogue at `https://apexfaucet.xyz/.well-known/x402` (130 paid endpoints on 20 Oct 2026):
+
+- `GET /api/x402/flight-deals?origin=<IATA>` ($0.01): the cheapest return flights from any city, up to 30 destinations, each with dates, stops, airline and a booking link. Fares from real Aviasales searches in about the last 48 hours (cached). The traveller books and pays on the airline or agency site; a booking through the link pays APEX Faucet a commission at no extra cost.
+- `GET /api/x402/weather-now?city=<city>` ($0.006) and `GET /api/x402/web-search?q=<query>` ($0.015), the **APEX Dispatcher**: we buy the answer from the x402 provider with the most distinct paying wallets in 30 days that is answering right now, and return it with the provider's name and the Base transaction of that upstream payment as a receipt.
 
 Every tool that sells data or work is paid per call, each a little under the closest competitor: `page_extract` $0.009,
 `site_extract` $0.14 (up to 25 pages), token exit checks $0.004, the X1 and Arc data tools from $0.001, bulk data $0.025
