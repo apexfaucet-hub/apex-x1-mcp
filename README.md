@@ -1,6 +1,7 @@
+Page extract, page to markdown, web read, token and NFT info for agents. Pay per call, x402.
+
 # APEX MCP server
 
-A real browser for your agent, plus an honest "can I get out?" check for tokens on Arc and other chains.
 
 - **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
 - **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
