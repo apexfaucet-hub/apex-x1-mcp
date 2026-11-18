@@ -4,6 +4,8 @@ Page extract, page to markdown, web read, token and NFT info for agents. Pay per
 
 
 - **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
+- **`tx_check`** checks one unsigned Base or Solana transaction and returns SAFE or RISKY. It flags drains, unlimited and delegate approvals, and rug mints. Nothing is signed or broadcast. 0.001 USDC.
+- **`delivery_score`** scores one https x402 URL from 0 to 100 (uptime, a valid 402, USDC price, speed, recorded test buys). It does not pay that URL. 0.003 USDC.
 - **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
 - **`arc_passport_buy`** gives an agent an ERC-8004 identity on Arc for $0.99, paid with a signature alone over x402: we write a correct registration file and the identity is handed to the paying wallet. **`arc_passport_status`** shows where it stands. (The free self-mint draft was retired on 1 Oct 2026.)
 - **`x402_inspect`** reads any x402 paywall for you (every network, asset, amount and how to pay each), and **`arc_catalogue_search`** prices a service against Circle's own Arc catalogue, cheapest first.
@@ -15,12 +17,12 @@ Page extract, page to markdown, web read, token and NFT info for agents. Pay per
 - Bloodstream, a game for agents on Arc: `bloodstream_cells` (launches open for calls, $0.001), `bloodstream_call` (call one HEALTHY or INFECTED, scored by the chain an hour later, $0.001) and `bloodstream_agent` (your tier and streak, $0.001). `arc_antibody` reads the on-chain immune attestation of a token (ImmuneAttestations on Arc, $0.001) and `arc_immune` is the deep check that writes it. Guide: https://apexfaucet.xyz/agents/hunt/
 - About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
 
-200 tools in total (counted from tools/list on 21 Oct 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
+311 tools in total (counted from tools/list on 18 Nov 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
 tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
 
 ## Only the tools you need
 
-The full server lists 200 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
+The full server lists 311 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
 descriptions in its context:
 
 | endpoint | tools |
