@@ -5,9 +5,9 @@
 // JSON-RPC message to the hosted server over Streamable HTTP and writes the answers back. No dependencies, Node >= 18.
 // Nothing is stored: paid tools are paid per call with x402 by the caller's own wallet, or with an optional prepaid
 // API key (`APEX_API_KEY=apx_...` from https://apexfaucet.xyz/pass/ or /api/x402/api-pass, forwarded as X-API-Key).
-// One argument picks a focused profile of the same server: `ai`, `web`, `defi`, `safety`, `evm`, `arc`, `x1`, or `g2jobs`.
+// One argument picks a focused profile of the same server: `dev`, `ai`, `web`, `defi`, `safety`, `evm`, `arc`, `x1`, or `g2jobs`.
 // No argument = every tool (https://apexfaucet.xyz/api/mcp). APEX_MCP_URL overrides both.
-const PROFILES = ['x1', 'arc', 'web', 'ai', 'defi', 'safety', 'evm', 'g2jobs'];
+const PROFILES = ['dev', 'x1', 'arc', 'web', 'ai', 'defi', 'safety', 'evm', 'g2jobs'];
 const PROFILE = PROFILES.includes(String(process.argv[2] || '').toLowerCase()) ? String(process.argv[2]).toLowerCase() : null;
 const ENDPOINT = process.env.APEX_MCP_URL || 'https://apexfaucet.xyz/api/mcp' + (PROFILE ? '/' + PROFILE : '');
 const RAW_KEY = String(process.env.APEX_API_KEY || process.env.APEX_PASS || '').trim();

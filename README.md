@@ -1,6 +1,6 @@
 # APEX MCP Server (`apex-mcp`)
 
-**373 hosted MCP tools for AI agents** — AI/LLM inference, embeddings, JSON extraction/Schema/diff/CSV, translation, summarization, sentiment, OCR/STT/TTS, FLUX/SVG/QR generation, headless Chrome web rendering & PDF<->Markdown conversion, DeFi & 8-chain EVM intelligence, WHOIS/IP-geo/CVE/OpenAlex research, A2A agent card grading, x402 market price comps, and AI/crypto safety guardrails.
+**380 hosted MCP tools for AI agents** — AI/LLM inference, embeddings, npm/PyPI supply-chain security audit, GitHub repo health, website tech-stack fingerprinting, URL phishing check, RSS-to-JSON, ECB FX conversion, live crypto/DeFi news, JSON extraction/Schema/diff/CSV, translation, summarization, sentiment, OCR/STT/TTS, FLUX/SVG/QR generation, headless Chrome web rendering & PDF<->Markdown conversion, DeFi & 8-chain EVM intelligence, WHOIS/IP-geo/CVE/OpenAlex research, A2A agent card grading, x402 market price comps, and AI/crypto safety guardrails.
 
 Pay per call over **[x402](https://x402.org)** (USDC on Base, Arc, or Solana, or XNT on X1) — **or** use a prepaid **Card API Key (no crypto)** at [apexfaucet.xyz/pass/](https://apexfaucet.xyz/pass/) (`$5` Starter, `$20` Builder -> `$25` +25%, `$50` Pro -> `$65` +30%, tax included). Failed calls and bad inputs are refused before charge.
 
@@ -10,19 +10,20 @@ This repository is a tiny, zero-dependency stdio bridge to the hosted server for
 
 ## Pick a focused MCP profile (saves agent context)
 
-Instead of loading all 373 tools, connect directly to one domain endpoint (all listed in the [Official MCP Registry](https://registry.modelcontextprotocol.io) under `xyz.apexfaucet/*`):
+Instead of loading all 380 tools, connect directly to one domain endpoint (all listed in the [Official MCP Registry](https://registry.modelcontextprotocol.io) under `xyz.apexfaucet/*`):
 
 | Focused Streamable HTTP Endpoint | Bridge arg | Tools | Best for |
 |---|---|---:|---|
+| `https://apexfaucet.xyz/api/mcp/dev` | `dev` | 20 | Developer & supply-chain suite: `package_audit` (npm/PyPI OSV), `github_repo_intel`, `cve_lookup`, `tech_stack_detect`, `url_threat_check`, `json_toolbox`, `json_repair`, `qr_generate`, `pdf_to_markdown`, `markdown_to_pdf`, `html_to_pdf`, `rss_to_json`, `fx_convert`, `whois_lookup`, `ip_geolocate`, `agent_card_grade`, `x402_price_comps`, `delivery_score`, `prompt_guard`, `pii_redact` |
 | `https://apexfaucet.xyz/api/mcp/ai` | `ai` | 22 | OpenAI chat & Anthropic Messages, BGE embeddings, `json_extract`, `json_repair`, `json_toolbox` (Schema/diff/CSV), `text_translate` (100 langs), `text_summarize`, `text_sentiment`, `svg_generate`, `qr_generate`, `image_generate` (FLUX), `image_analyze`, `image_ocr`, `audio_transcribe` (Whisper), `text_to_speech` (Deepgram Aura-2), `html_to_pdf`, `markdown_to_pdf`, `pdf_to_markdown`, `prompt_guard`, `pii_redact`, `content_safety` |
-| `https://apexfaucet.xyz/api/mcp/web` | `web` | 30 | Headless Chrome `browser_render`, `page_extract`, `page_markdown`, `html_to_markdown`, `html_to_pdf`, `markdown_to_pdf`, `pdf_to_markdown`, `qr_generate`, `json_toolbox`, `agent_card_grade`, `x402_price_comps`, `paper_search` (OpenAlex), `whois_lookup` (IANA RDAP), `ip_geolocate`, `site_extract`, `web_read`, `company_dossier`, `email_verify_bulk`, `dns_records`, `tls_cert`, `security_headers` |
-| `https://apexfaucet.xyz/api/mcp/defi` | `defi` | 22 | DefiLlama `defi_chains_tvl`, `defi_protocol_tvl`, `defi_yields`, `dex_volumes`, `dex_new_pools`, `perp_funding`, `crypto_fear_greed`, `evm_log_decode`, `contract_audit`, `base_verdict`, `tx_check`, `evm_token_info`, `evm_wallet_balance`, `crypto_price`, `fx_rate`, `gas_all`, `cross_chain_quote`, `token_exit_matrix` |
-| `https://apexfaucet.xyz/api/mcp/safety` | `safety` | 17 | `prompt_guard`, `pii_redact`, `content_safety`, `cve_lookup` (NVD+OSV+KEV), `agent_card_grade`, `tx_check` (Base + Solana unsigned tx simulation), `delivery_score`, `contract_audit`, `evm_log_decode`, `wallet_investigate`, `base_verdict`, `token_exit_matrix` |
+| `https://apexfaucet.xyz/api/mcp/web` | `web` | 33 | Headless Chrome `browser_render`, `page_extract`, `page_markdown`, `html_to_markdown`, `html_to_pdf`, `markdown_to_pdf`, `pdf_to_markdown`, `tech_stack_detect`, `rss_to_json`, `url_threat_check`, `qr_generate`, `json_toolbox`, `agent_card_grade`, `x402_price_comps`, `paper_search` (OpenAlex), `whois_lookup` (IANA RDAP), `ip_geolocate`, `site_extract`, `web_read`, `company_dossier`, `email_verify_bulk`, `dns_records`, `tls_cert`, `security_headers` |
+| `https://apexfaucet.xyz/api/mcp/defi` | `defi` | 24 | DefiLlama `defi_chains_tvl`, `defi_protocol_tvl`, `defi_yields`, `dex_volumes`, `dex_new_pools`, `perp_funding`, `crypto_fear_greed`, `crypto_news_feed`, `fx_convert`, `evm_log_decode`, `contract_audit`, `base_verdict`, `tx_check`, `evm_token_info`, `evm_wallet_balance`, `crypto_price`, `fx_rate`, `gas_all`, `cross_chain_quote`, `token_exit_matrix` |
+| `https://apexfaucet.xyz/api/mcp/safety` | `safety` | 19 | `prompt_guard`, `pii_redact`, `content_safety`, `package_audit`, `url_threat_check`, `cve_lookup` (NVD+OSV+KEV), `agent_card_grade`, `tx_check` (Base + Solana unsigned tx simulation), `delivery_score`, `contract_audit`, `evm_log_decode`, `wallet_investigate`, `base_verdict`, `token_exit_matrix` |
 | `https://apexfaucet.xyz/api/mcp/evm` | `evm` | 34 | 8-chain EVM reads & simulations (Ethereum, Base, Arbitrum, Optimism, Polygon, BNB, Arc, Robinhood) |
 | `https://apexfaucet.xyz/api/mcp/arc` | `arc` | 107 | Circle Arc L1 tools: free USDC faucet, `arc_exit_check`, `arc_holders`, `arc_trades`, `arc_send_guard`, `market_search`, ERC-8004 passports |
 | `https://apexfaucet.xyz/api/mcp/x1` | `x1` | 40 | X1 blockchain tools: `x1_passport`, `x1_agents`, `x1_payment_check`, `exit_check`, token/wallet reports, unsigned swaps |
 | `https://apexfaucet.xyz/api/mcp/g2jobs` | `g2jobs` | 3 | ERC-8183 USDC agent job escrow on Base & Arc |
-| `https://apexfaucet.xyz/api/mcp` | *(none)* | 373 | Full catalogue (`ask_apex` router + all tools) |
+| `https://apexfaucet.xyz/api/mcp` | *(none)* | 380 | Full catalogue (`ask_apex` router + all tools) |
 
 ## Quick Install
 
