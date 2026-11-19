@@ -1,7 +1,7 @@
 {
   "name": "apex-mcp",
-  "version": "1.3.0",
-  "description": "360 AI, web scrape, PDF/OCR, DeFi, EVM audit & safety MCP tools for agents. Pay per call via x402 or $5 API key.",
+  "version": "1.4.0",
+  "description": "397 hosted MCP tools: Synapse Work & 80% Royalty Exchange, Agent KV Memory, Deep Research, Live Pulse, Veritas Proof Chain, Machine Credit Bureau, Ed25519 Agent Firewall, Work Grader, AI/LLM, PDF/OCR & DeFi. Pay via x402 or Card API key.",
   "bin": {
     "apex-mcp": "index.js"
   },
