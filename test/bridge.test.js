@@ -16,7 +16,7 @@ let server, url;
 // The mock answers by method. The test/* methods misbehave on purpose.
 function handle(req, res, body) {
   let msg = null; try { msg = JSON.parse(body); } catch (e) { /* recorded as null */ }
-  seen.push({ msg, session: req.headers['mcp-session-id'] || null });
+  seen.push({ msg, session: req.headers['mcp-session-id'] || null, apiKey: req.headers['x-api-key'] || null });
   const json = (status, obj, headers) => { res.writeHead(status, { 'content-type': 'application/json', ...headers }); res.end(JSON.stringify(obj)); };
   if (!msg || msg.method === undefined || msg.id === undefined) { res.writeHead(202); return res.end(); }
   const reply = (result, headers) => json(200, { jsonrpc: '2.0', id: msg.id, result }, headers);
@@ -38,8 +38,11 @@ function handle(req, res, body) {
 }
 
 // Spawns the bridge and reads its stdout one JSON-RPC line at a time.
-function bridge(endpoint = url) {
-  const child = spawn(process.execPath, [BRIDGE], { env: { ...process.env, APEX_MCP_URL: endpoint } });
+function bridge(endpoint = url, extraEnv = {}) {
+  const env = { ...process.env, APEX_MCP_URL: endpoint, ...extraEnv };
+  if (!extraEnv.APEX_API_KEY) delete env.APEX_API_KEY;
+  if (!extraEnv.APEX_PASS) delete env.APEX_PASS;
+  const child = spawn(process.execPath, [BRIDGE], { env });
   children.push(child);
   const lines = [], waiters = [];
   let partial = '';
@@ -198,4 +201,19 @@ test('a request still in flight when stdin closes is answered before the process
   b.end();
   assert.deepStrictEqual(await b.next(), { jsonrpc: '2.0', id: 40, result: { slow: true } });
   assert.deepStrictEqual(await b.exited(), { code: 0, signal: null });
+});
+
+test('APEX_API_KEY forwards valid apx_ key as x-api-key and ignores malformed values', async () => {
+  const b1 = bridge(url, { APEX_API_KEY: 'apx_testkey1234567890' });
+  b1.request(50, 'ping');
+  assert.deepStrictEqual(await b1.next(), { jsonrpc: '2.0', id: 50, result: {} });
+  assert.strictEqual(seen[0].apiKey, 'apx_testkey1234567890');
+  b1.end(); await b1.exited();
+
+  seen.length = 0;
+  const b2 = bridge(url, { APEX_API_KEY: 'not-an-apx-key' });
+  b2.request(51, 'ping');
+  assert.deepStrictEqual(await b2.next(), { jsonrpc: '2.0', id: 51, result: {} });
+  assert.strictEqual(seen[0].apiKey, null);
+  b2.end(); await b2.exited();
 });

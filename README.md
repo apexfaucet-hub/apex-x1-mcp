@@ -1,83 +1,97 @@
-Page extract, page to markdown, web read, token and NFT info for agents. Pay per call, x402.
+# APEX MCP Server (`apex-mcp`)
 
-# APEX MCP server
+**360 hosted MCP tools for AI agents** — AI/LLM inference, embeddings, JSON extraction, translation, summarization, sentiment, OCR/STT/TTS, FLUX & SVG generation, headless Chrome web scraping & HTML-to-PDF, DeFi & 8-chain EVM intelligence, and AI/crypto safety guardrails.
 
+Pay per call over **[x402](https://x402.org)** (USDC on Base, Arc, or Solana, or XNT on X1) — **or** use a prepaid **$5 API Key by card (no crypto)** at [apexfaucet.xyz/pass/](https://apexfaucet.xyz/pass/). Failed calls and bad inputs are refused before charge.
 
-- **`page_extract`** renders any public URL in headless Chrome, with JavaScript executed, and returns clean text, headings and links. Single-page apps and docs sites that a plain fetch returns empty come back complete.
-- **`tx_check`** checks one unsigned Base or Solana transaction and returns SAFE or RISKY. It flags drains, unlimited and delegate approvals, and rug mints. Nothing is signed or broadcast. 0.001 USDC.
-- **`delivery_score`** scores one https x402 URL from 0 to 100 (uptime, a valid 402, USDC price, speed, recorded test buys). It does not pay that URL. 0.003 USDC.
-- **`site_extract`** renders up to 25 pages of one site in a single call. Same host only, robots.txt obeyed.
-- **`arc_passport_buy`** gives an agent an ERC-8004 identity on Arc for $0.99, paid with a signature alone over x402: we write a correct registration file and the identity is handed to the paying wallet. **`arc_passport_status`** shows where it stands. (The free self-mint draft was retired on 1 Oct 2026.)
-- **`x402_inspect`** reads any x402 paywall for you (every network, asset, amount and how to pay each), and **`arc_catalogue_search`** prices a service against Circle's own Arc catalogue, cheapest first.
-- **`arc_exit_check`** answers, before you buy a token on Circle's Arc, whether you can sell it again and what the round trip costs: a real buy-then-sell simulated on the live chain, nothing spent, plus the pool's fee (some Arc pools take 49-93% of every trade).
-- **`exit_check`** does the same kind of check on Solana, X1 and five EVM chains.
-- **`base_exit_check`** does it on Base by execution: a buy and a full sell through the token's deepest Uniswap v2, v3 or v4 pool (hooks included) in one simulated block, returning the ETH that comes back and the revert reason if a leg fails.
-- **`arc_holders`** is a rug check for any Arc token: holders, top 10, what the pools hold now, and whether the creator took the liquidity back. **`arc_trades`** gives the last 24 h of buys, sells and net USDC flow. **`market_search`** searches every paid x402 API (Coinbase Bazaar, Circle, Fuci, CRA) ranked by how many wallets paid; people can browse it at https://apexfaucet.xyz/market/.
-- **`page_snap`** returns a screenshot of a page with its text, **`email_check`** checks one address before you send to it, and **`x402_seller_check`** tells you whether an x402 seller's buyers come back or each wallet paid once.
-- Bloodstream, a game for agents on Arc: `bloodstream_cells` (launches open for calls, $0.001), `bloodstream_call` (call one HEALTHY or INFECTED, scored by the chain an hour later, $0.001) and `bloodstream_agent` (your tier and streak, $0.001). `arc_antibody` reads the on-chain immune attestation of a token (ImmuneAttestations on Arc, $0.001) and `arc_immune` is the deep check that writes it. Guide: https://apexfaucet.xyz/agents/hunt/
-- About 70 more tools for the X1 chain: token lookups, trades, candles, wallet profiles, a free faucet claimed by signature, and a screener.
+Hosted Streamable HTTP server: `https://apexfaucet.xyz/api/mcp` · Pricing: [apexfaucet.xyz/pricing/](https://apexfaucet.xyz/pricing/) · Agent guide: [apexfaucet.xyz/for-agents/](https://apexfaucet.xyz/for-agents/)
 
-311 tools in total (counted from tools/list on 18 Nov 2026; tools/list is always the live answer). The hosted server is `https://apexfaucet.xyz/mcp` (also `/api/mcp`) (Streamable HTTP, no API key). This repository is a
-tiny, dependency-free stdio bridge to it, for clients that launch MCP servers as local commands.
+This repository is a tiny, zero-dependency stdio bridge to the hosted server for clients that launch MCP servers as local commands (Claude Desktop, Cursor, Cline, Windsurf, VS Code).
 
-## Only the tools you need
+## Pick a focused MCP profile (saves agent context)
 
-The full server lists 311 tools. Focused endpoints list only their own domain, so your agent does not carry 192 tool
-descriptions in its context:
+Instead of loading all 360 tools, connect directly to one domain endpoint (all listed in the [Official MCP Registry](https://registry.modelcontextprotocol.io) under `xyz.apexfaucet/*`):
 
-| endpoint | tools |
-|---|---|
-| `https://apexfaucet.xyz/api/mcp/web` | `page_extract`, `site_extract` (the browser), `web_read` |
-| `https://apexfaucet.xyz/api/mcp/arc` | the 69 Arc tools: rug checks (`arc_holders`), 24 h trades and net USDC flow (`arc_trades`), a search over every paid x402 API (`market_search`), faucet, agent passports, exit checks and verdicts, the agent watchtower, the x402 explorer and facilitators, Circle catalogue price search, the paywall inspector, wallet, contract, RPC and reputation checks, pools, bridges, gas, fee vaults, graveyard, impostors, deployers, liquidity, assays, guides |
-| `https://apexfaucet.xyz/api/mcp/x1` | the 20 X1 tools: an agent identity in the X1 Agent Registry (`x1_passport`), the directory of registered X1 agents with live endpoint checks (`x1_agents`), payment verification for XNT and any X1 token (`x1_payment_check`), token and wallet data, exit checks, unsigned swaps |
-| `https://apexfaucet.xyz/api/mcp/evm` | the 17 EVM read tools (Ethereum, Base, Arc, BNB): balances, transactions, ENS, contract calls, payment verification |
-| `https://apexfaucet.xyz/api/mcp/g2jobs` | the 3 G2 Jobs tools: hire an agent through an ERC-8183-readable USDC escrow on Base or Arc |
-| `https://apexfaucet.xyz/api/mcp` | everything |
+| Focused Streamable HTTP Endpoint | Bridge arg | Tools | Best for |
+|---|---|---:|---|
+| `https://apexfaucet.xyz/api/mcp/ai` | `ai` | 18 | OpenAI chat & Anthropic Messages, BGE embeddings, `json_extract`, `json_repair`, `text_translate` (100 langs), `text_summarize`, `text_sentiment`, `svg_generate`, `image_generate` (FLUX), `image_analyze`, `image_ocr`, `audio_transcribe` (Whisper), `text_to_speech` (Deepgram Aura-2), `html_to_pdf`, `prompt_guard`, `pii_redact`, `content_safety` |
+| `https://apexfaucet.xyz/api/mcp/web` | `web` | 20 | Headless Chrome `page_extract`, `page_markdown`, `html_to_markdown`, `html_to_pdf`, `site_extract` (up to 25 pages), `web_read`, `company_dossier`, `email_verify_bulk`, `dns_records`, `tls_cert`, `security_headers`, `link_check` |
+| `https://apexfaucet.xyz/api/mcp/defi` | `defi` | 20 | DefiLlama `defi_chains_tvl`, `defi_protocol_tvl`, `defi_yields`, `dex_new_pools`, `perp_funding`, `evm_log_decode`, `contract_audit`, `base_verdict`, `tx_check`, `evm_token_info`, `evm_wallet_balance`, `crypto_price`, `fx_rate`, `gas_all`, `cross_chain_quote`, `token_exit_matrix` |
+| `https://apexfaucet.xyz/api/mcp/safety` | `safety` | 15 | `prompt_guard`, `pii_redact`, `content_safety`, `tx_check` (Base + Solana unsigned tx simulation), `delivery_score`, `contract_audit`, `evm_log_decode`, `wallet_investigate`, `base_verdict`, `token_exit_matrix` |
+| `https://apexfaucet.xyz/api/mcp/evm` | `evm` | 34 | 8-chain EVM reads & simulations (Ethereum, Base, Arbitrum, Optimism, Polygon, BNB, Arc, Robinhood) |
+| `https://apexfaucet.xyz/api/mcp/arc` | `arc` | 109 | Circle Arc L1 tools: free USDC faucet, `arc_exit_check`, `arc_holders`, `arc_trades`, `arc_send_guard`, `market_search`, ERC-8004 passports |
+| `https://apexfaucet.xyz/api/mcp/x1` | `x1` | 40 | X1 blockchain tools: `x1_passport`, `x1_agents`, `x1_payment_check`, `exit_check`, token/wallet reports, unsigned swaps |
+| `https://apexfaucet.xyz/api/mcp/g2jobs` | `g2jobs` | 3 | ERC-8183 USDC agent job escrow on Base & Arc |
+| `https://apexfaucet.xyz/api/mcp` | *(none)* | 360 | Full catalogue (`ask_apex` router + all tools) |
 
-The Docker image in this repo (what Glama and other registries build) starts the X1 profile, `node index.js x1`, so this listing shows the 20 X1 tools it is named for. Run `node index.js` with no argument for every tool.
+## Quick Install
 
-With this bridge, pick one by name as the last argument (`node index.js x1`, `arc` or `web`), or with `APEX_MCP_URL`, for example `"env": { "APEX_MCP_URL": "https://apexfaucet.xyz/api/mcp/web" }`. The Glama listing "APEX X1" runs the `x1` profile.
-
-## Install
-
-Claude Desktop, Cursor, Cline or any client that runs a command:
+### Option 1: Direct Streamable HTTP (Claude Code, VS Code, Cursor, SDKs)
 
 ```json
 {
   "mcpServers": {
-    "apex": { "command": "npx", "args": ["-y", "github:apexfaucet-hub/apex-x1-mcp"] }
+    "apex-ai": {
+      "url": "https://apexfaucet.xyz/api/mcp/ai",
+      "headers": {
+        "X-API-Key": "apx_your_key_optional"
+      }
+    }
   }
 }
 ```
 
-Clients that speak Streamable HTTP can skip the bridge and use the URL directly: `https://apexfaucet.xyz/api/mcp`.
+*(Omit `headers` to pay per call via x402 USDC/XNT with no account or API key.)*
 
-Requires Node 18 or newer. Set `APEX_MCP_URL` to point the bridge somewhere else.
+### Option 2: Local stdio bridge (`npx`)
 
-## Price
+```json
+{
+  "mcpServers": {
+    "apex-ai": {
+      "command": "npx",
+      "args": ["-y", "github:apexfaucet-hub/apex-x1-mcp", "ai"],
+      "env": {
+        "APEX_API_KEY": "apx_your_key_optional"
+      }
+    }
+  }
+}
+```
 
-## New on 20 Oct 2026: flights, weather and live web search (x402, HTTP)
+Replace `"ai"` with `"web"`, `"defi"`, `"safety"`, `"evm"`, `"arc"`, `"x1"`, `"g2jobs"`, or omit it for all 360 tools. Set `APEX_MCP_URL` to override the endpoint directly. Requires Node 18+.
 
-These are paid HTTP endpoints (x402, USDC), listed in the catalogue at `https://apexfaucet.xyz/.well-known/x402` (130 paid endpoints on 20 Oct 2026):
+The Docker image in this repo (used by Glama and container registries) runs `node index.js x1` by default; pass any profile argument or no argument to change it.
 
-- `GET /api/x402/flight-deals?origin=<IATA>` ($0.01): the cheapest return flights from any city, up to 30 destinations, each with dates, stops, airline and a booking link. Fares from real Aviasales searches in about the last 48 hours (cached). The traveller books and pays on the airline or agency site; a booking through the link pays APEX Faucet a commission at no extra cost.
-- `GET /api/x402/weather-now?city=<city>` ($0.006) and `GET /api/x402/web-search?q=<query>` ($0.015), the **APEX Dispatcher**: we buy the answer from the x402 provider with the most distinct paying wallets in 30 days that is answering right now, and return it with the provider's name and the Base transaction of that upstream payment as a receipt.
+## Pricing & Payment Options
 
-Every tool that sells data or work is paid per call, each a little under the closest competitor: `page_extract` $0.009,
-`site_extract` $0.14 (up to 25 pages), token exit checks $0.004, the X1 and Arc data tools from $0.001, bulk data $0.025
-(full list: https://apexfaucet.xyz/pricing/). There is no free allowance on those. Payment is [x402](https://x402.org), made by the
-caller's own wallet per call: USDC on Arc, Base or Solana, gas-free USDC from a Circle Gateway balance on Arc or Base, USD1 or
-U on BNB Chain, or XNT on X1. Without a crypto wallet, the same products can be called over plain HTTP
-with a $5 card pass (https://apexfaucet.xyz/pass/, sent in the `X-APEX-PASS` header) at the same prices. The price is stated before you pay, and a call
-that fails (a bot wall, an empty render) fails instead of charging. The faucet tools stay free.
+Every paid tool is priced transparently (`$0.001`–`$0.05` for most tools; full table at [apexfaucet.xyz/pricing/](https://apexfaucet.xyz/pricing/)):
 
-## What this bridge does
+- **Card — no crypto needed:** Buy a **$5 API Key** (`apx_...`) by credit/debit card at **[apexfaucet.xyz/pass/](https://apexfaucet.xyz/pass/)** and pass it in `X-API-Key` (or `APEX_API_KEY` env var / `Authorization: Bearer apx_...`). Unlocks every paid HTTP endpoint and MCP tool with zero per-call signing latency and automatic refund on errors.
+- **Prepaid USDC API Passes (+30% / +40% bonus):**
+  - `GET|POST /api/x402/api-pass` — `$0.50` USDC -> **`$0.65`** credit (+30%)
+  - `GET|POST /api/x402/api-pass-pro` — `$2.00` USDC -> **`$2.80`** credit (+40%)
+- **Pay-per-call x402 (no account):** USDC on Base (`eip155:8453`), Arc (`eip155:5042`), or Solana, gas-free Circle Gateway balance on Arc/Base, or XNT on X1.
+- **Free daily samples:** 22 endpoints answer one free real call per day at `https://apexfaucet.xyz/api/free/<slug>` (list: `GET https://apexfaucet.xyz/api/free/x`).
 
-It reads JSON-RPC messages from stdin, forwards each one to the hosted server, and writes the answers to stdout. It stores
-nothing, needs no key, and has no dependencies: read [`index.js`](index.js), it is under 50 lines.
+## Representative Prices (Direct HTTP or MCP)
 
-Discovery: [`/.well-known/mcp/server-card.json`](https://apexfaucet.xyz/.well-known/mcp/server-card.json) ·
-[`llms.txt`](https://apexfaucet.xyz/llms.txt) · [x402 catalogue](https://apexfaucet.xyz/.well-known/x402)
+| Category | Endpoints | Price |
+|---|---|---:|
+| Guardrails & cleanup | `prompt-guard`, `pii-redact`, `json-repair`, `content-safety` | `$0.001` |
+| AI NLP & vectors | `embeddings` (`/v1/embeddings`), `text-translate`, `text-summarize`, `text-sentiment` | `$0.001` |
+| AI LLMs & media | `chat-completions` (`/v1/chat/completions`), `llm-messages` (`/v1/messages`), `svg-generate` | `$0.002` |
+| Documents & OCR/TTS | `html-to-markdown` (`$0.002`), `html-to-pdf` (`$0.003`), `image-ocr` (`$0.004`), `text-to-speech` (`$0.004`) | `$0.002–$0.004` |
+| Structured AI & audio/image | `json-extract`, `image-generate` (FLUX.1), `image-analyze`, `audio-transcribe` (Whisper) | `$0.005` |
+| Web scraping | `page-markdown` (`$0.002`), `web-read` (`$0.003`), `page-extract` (`$0.009`), `site-extract` (`$0.14`) | `$0.002–$0.14` |
+| DeFi & EVM intel | `evm-token-info`/`gas-all`/`tx-check` (`$0.001`), `defi-chains-tvl`/`defi-yields`/`evm-log-decode` (`$0.004`), `perp-funding` (`$0.005`), `contract-audit` (`$0.05`) | `$0.001–$0.05` |
+
+## Discovery
+
+- OpenAPI 3.1: `https://apexfaucet.xyz/openapi.json`
+- MCP Server Card: `https://apexfaucet.xyz/.well-known/mcp/server-card.json`
+- x402 Catalogue: `https://apexfaucet.xyz/.well-known/x402`
+- Agent Guide: `https://apexfaucet.xyz/llms.txt`
 
 ## Development
 
@@ -85,11 +99,6 @@ Discovery: [`/.well-known/mcp/server-card.json`](https://apexfaucet.xyz/.well-kn
 npm test
 ```
 
-This runs `node --test`: the tests in [`test/`](test) start a local mock MCP server and run the bridge against it, so
-they need no network, no key and no install step. They pass on Node 18, 20 and 22.
+Runs `node --test` against a local mock MCP server (no network, no dependencies, passes on Node 18/20/22).
 
 MIT licensed.
-
-## Agent Meal
-
-Agents that pay for APEX tools are served an on-chain meal NFT on Arc (one per tool family per 30-day season, gas on us). Five different dishes forge into a Chef's Special. Rules: https://apexfaucet.xyz/arc/meals/rules.json. The `agent_meal` tool shows the kitchen and any plate.
